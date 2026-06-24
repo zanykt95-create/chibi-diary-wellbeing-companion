@@ -1,0 +1,31 @@
+# ADK CLI manifest for Chibi Diary & Wellbeing Companion
+# This file is read by `agents-cli` and `adk` to locate the root agent.
+# IMPORTANT: Do NOT rename or move this file — ADK's CLI discovers it automatically.
+
+schema_version: "1.0"
+
+project:
+  name: chibi-diary
+  description: >
+    Personal diary concierge agent that accepts daily text entries,
+    analyzes mood, generates chibi-style artwork, and produces
+    weekly/monthly diary recaps.
+
+agent:
+  # Path to the Python module containing the root_agent definition.
+  # ADK imports this module and looks for the `root_agent` variable.
+  module: app.orchestrator
+  # The variable name of the root agent inside the module.
+  root_agent: root_agent
+
+runtime:
+  # Use AI Studio (GOOGLE_API_KEY) for local dev.
+  # Switch to vertex_ai for production deployment.
+  provider: google_ai_studio
+  # Default model — agents can override this individually.
+  default_model: gemini-2.5-flash
+
+session:
+  # In-memory session for Day 1 prototype.
+  # Upgrade to cloud_sql or agent_platform_sessions for production.
+  type: in_memory

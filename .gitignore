@@ -1,0 +1,38 @@
+# Environment & credentials — NEVER commit
+.env
+*.key
+*.pem
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+.eggs/
+*.egg-info/
+dist/
+build/
+
+# Test cache
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Database (test data, rebuild locally)
+*.db
+*.sqlite
+
+# Generated chibi images (outputs)
+output/
+
+# Google Cloud SDK (too large, install separately)
+google-cloud-sdk/
+
+# macOS
+.DS_Store
+
+# Editor
+.idea/
+.vscode/
+*.swp

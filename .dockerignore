@@ -1,0 +1,10 @@
+.venv/
+.env
+*.db
+output/
+tests/
+.pytest_cache/
+pycache/
+*.pyc
+.git/
+google-cloud-sdk/
