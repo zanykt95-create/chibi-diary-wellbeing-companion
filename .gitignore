@@ -26,6 +26,9 @@ htmlcov/
 # Generated chibi images (outputs)
 output/
 
+# ADK runtime artifacts (session data, not source code)
+.adk/
+
 # Google Cloud SDK (too large, install separately)
 google-cloud-sdk/
 

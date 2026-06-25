@@ -2,7 +2,7 @@
 
 **Track:** Concierge Agents  
 **Author:** Z (datlq@mynavitechtus.com)  
-**Project:** [GitHub Repo](https://github.com/zanykt95-create/chibi-diary-wellbeing-companion) | [Video Demo](https://youtube.com/)
+**Project:** [GitHub Repo](https://github.com/zanykt95-create/chibi-diary-wellbeing-companion) | [Video Demo](https://www.youtube.com/watch?v=8AcrdQWtwEs)
 
 ---
 

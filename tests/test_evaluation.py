@@ -22,7 +22,7 @@ from chibi_diary.agents.mood_analysis_agent import mood_analysis_agent
 from chibi_diary.agents.chibi_illustrator_agent import chibi_illustrator_agent
 from chibi_diary.agents.memory_agent import memory_agent
 from chibi_diary.orchestrator import root_agent
-import app.tools.placeholder_tools as p_tools
+import chibi_diary.tools.placeholder_tools as p_tools
 from chibi_diary.memory.long_term_memory import LongTermMemory
 
 # ---------------------------------------------------------------------------
