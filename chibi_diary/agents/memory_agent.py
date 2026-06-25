@@ -18,7 +18,6 @@ Why save here (not in the orchestrator)?
 
 from __future__ import annotations
 
-import base64
 from datetime import date
 from pathlib import Path
 

@@ -19,7 +19,7 @@ Run with: uv run pytest tests/ -v
 from __future__ import annotations
 
 import os
-import tempfile
+import tempfile as _tempfile
 from typing import Any
 
 import pytest
@@ -32,7 +32,6 @@ os.environ.setdefault("GOOGLE_API_KEY", "test-key-placeholder")
 os.environ.setdefault("GOOGLE_GENAI_USE_VERTEXAI", "False")
 
 # Set a temp DB path for tests so we don't pollute the dev database
-import tempfile as _tempfile
 _TMP_DB_FILE = _tempfile.NamedTemporaryFile(suffix=".db", delete=False)
 _TMP_DB = _TMP_DB_FILE.name
 _TMP_DB_FILE.close()

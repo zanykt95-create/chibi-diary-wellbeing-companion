@@ -1,14 +1,19 @@
 """
-app/agents/chibi_illustrator_agent.py
+chibi_diary/agents/chibi_illustrator_agent.py
 
 Chibi Illustrator Agent — Stage 3 of the Chibi Diary pipeline.
 
-Day 2: Connects to the real MCP server (mcp_server/chibi_mcp_server.py) via
+Connects to the real MCP server (mcp_server/chibi_mcp_server.py) via
 McpToolset using stdio transport. ADK manages the MCP server lifecycle
 automatically — no need to start the server manually.
 
 McpToolset is a BaseToolset that can be passed directly in the Agent's tools
-list. ADK lazily starts the MCP server subprocess on first tool invocation.
+list. ADK lazily starts the MCP server subprocess on first tool invocation —
+the module-level instantiation below does NOT spawn a subprocess at import time.
+
+Note on env passthrough: _MCP_ENV provides only override values; the full
+parent environment ({**os.environ, **_MCP_ENV}) is passed to the subprocess,
+so GOOGLE_API_KEY and all other credentials are automatically inherited.
 """
 
 from __future__ import annotations

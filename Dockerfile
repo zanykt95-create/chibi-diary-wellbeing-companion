@@ -12,7 +12,7 @@ COPY pyproject.toml uv.lock ./
 RUN uv sync --frozen --no-dev
 
 # Copy application source
-COPY app/ ./app/
+COPY chibi_diary/ ./chibi_diary/
 COPY GEMINI.md ./
 
 # MCP server must be co-located
@@ -26,4 +26,4 @@ ENV GOOGLE_GENAI_USE_VERTEXAI=True
 EXPOSE 8080
 
 # Run ADK web server
-CMD ["uv", "run", "adk", "web", "--host", "0.0.0.0", "--port", "8080", "app"]
+CMD ["uv", "run", "adk", "web", "--host", "0.0.0.0", "--port", "8080", "chibi_diary"]

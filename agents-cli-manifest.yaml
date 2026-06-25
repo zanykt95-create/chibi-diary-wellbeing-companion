@@ -14,7 +14,7 @@ project:
 agent:
   # Path to the Python module containing the root_agent definition.
   # ADK imports this module and looks for the `root_agent` variable.
-  module: app.orchestrator
+  module: chibi_diary.orchestrator
   # The variable name of the root agent inside the module.
   root_agent: root_agent
 

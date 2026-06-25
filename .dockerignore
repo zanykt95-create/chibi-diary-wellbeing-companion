@@ -4,7 +4,7 @@
 output/
 tests/
 .pytest_cache/
-pycache/
+__pycache__/
 *.pyc
 .git/
 google-cloud-sdk/
