@@ -61,9 +61,9 @@ All agents use the **Google ADK** framework and the `gemini-2.5-flash` model. In
 
 3. **Start the ADK Web server:**
    ```bash
-   uv run adk web app
+   uv run adk web
    ```
-   *This starts the web server locally and displays the interactive UI at [http://localhost:8080](http://localhost:8080).*
+   *This starts the web server locally and displays the interactive UI at [http://localhost:8000](http://localhost:8000). Select `chibi_diary` from the app dropdown to begin.*
 
 ---
 
@@ -139,13 +139,13 @@ chibi-diary/
 ├── .dockerignore                # Docker build context exclusions
 ├── cloudbuild.yaml              # Cloud Build definition for Cloud Run
 ├── deploy.sh                    # Deployment convenience script
-├── app/
+├── chibi_diary/
 │   ├── orchestrator.py          # Root Workflow orchestrator
 │   ├── agents/                  # 4 sequential specialist agents
 │   │   ├── capture_agent.py     # Captures, sanitizes (InputSanitizer) and validates
 │   │   ├── mood_analysis_agent.py # Identifies feelings and intensity scores
 │   │   ├── chibi_illustrator_agent.py # Prompts Imagen 3 via MCP for art
-│   │   └── memory_agent.py      # Persistence, Vietnamese insights
+│   │   └── memory_agent.py      # Persistence, conversational insights
 │   ├── tools/                   # Action tools used by agents
 │   └── memory/                  # Session and SQLite long-term storage
 ├── mcp_server/                  # FastMCP Imagen 3 subprocess server
