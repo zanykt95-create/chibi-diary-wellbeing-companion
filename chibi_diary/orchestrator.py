@@ -1,5 +1,5 @@
 """
-app/orchestrator.py
+chibi_diary/orchestrator.py
 
 Root orchestrator agent for Chibi Diary & Wellbeing Companion.
 

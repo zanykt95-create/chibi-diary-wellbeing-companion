@@ -1,5 +1,5 @@
 """
-app/agents/__init__.py
+chibi_diary/agents/__init__.py
 
 Agents sub-package for Chibi Diary.
 

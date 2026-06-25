@@ -1,5 +1,5 @@
 """
-app/memory/session_memory.py
+chibi_diary/memory/session_memory.py
 
 Short-term in-process session memory for Chibi Diary.
 

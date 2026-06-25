@@ -1,5 +1,5 @@
 """
-app/agents/capture_agent.py
+chibi_diary/agents/capture_agent.py
 
 Capture Agent — Stage 1 of the Chibi Diary pipeline.
 

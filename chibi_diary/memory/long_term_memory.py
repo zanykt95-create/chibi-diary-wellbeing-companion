@@ -1,5 +1,5 @@
 """
-app/memory/long_term_memory.py
+chibi_diary/memory/long_term_memory.py
 
 Long-term SQLite-backed diary history for Chibi Diary.
 
@@ -225,7 +225,6 @@ class LongTermMemory:
                 "entries": [],
             }
 
-
         mood_counts = Counter(r["mood"] for r in rows)
         dominant_mood = mood_counts.most_common(1)[0][0]
         avg_score = round(sum(r["mood_score"] for r in rows) / len(rows), 2)
@@ -237,6 +236,7 @@ class LongTermMemory:
             "average_score": avg_score,
             "entries": [r["summary"] for r in rows],
         }
+
     def search_entries_sync(self, keyword: str, limit: int = 10) -> list[dict]:
         """Perform full-text search across raw_text and summary fields.
 
@@ -326,7 +326,6 @@ class LongTermMemory:
                 "average_score": 0.0,
                 "entries": [],
             }
-
 
         mood_counts = Counter(r["mood"] for r in rows)
         dominant_mood = mood_counts.most_common(1)[0][0]

@@ -17,6 +17,6 @@ steps:
       - '--memory=1Gi'
       - '--cpu=1'
       - '--port=8080'
-      - '--set-env-vars=GOOGLE_GENAI_USE_VERTEXAI=True,GOOGLE_CLOUD_PROJECT=$PROJECT_ID'
+      - '--set-env-vars=GOOGLE_GENAI_USE_VERTEXAI=True,GOOGLE_CLOUD_PROJECT=$PROJECT_ID,GOOGLE_CLOUD_LOCATION=us-central1'
 images:
   - 'gcr.io/$PROJECT_ID/chibi-diary:$COMMIT_SHA'

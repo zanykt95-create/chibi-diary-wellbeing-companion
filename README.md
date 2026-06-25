@@ -3,7 +3,7 @@
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)](https://www.python.org/)
 [![Google ADK](https://img.shields.io/badge/Google%20ADK-2.x-orange.svg)](https://github.com/google/ai-agent-developer-kit)
 [![Powered by Gemini](https://img.shields.io/badge/Powered%20by-Gemini-purple.svg)](https://deepmind.google/technologies/gemini/)
-[![License Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-green.svg)](https://opensource.org/licenses/Apache-2.0)
+[![License CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 
 > **Your personal diary concierge — powered by Google ADK & Gemini**
 
@@ -170,4 +170,4 @@ chibi-diary/
 
 ## 📄 License
 
-Apache 2.0 — see [LICENSE](LICENSE).
+CC BY 4.0 — see [LICENSE](LICENSE).

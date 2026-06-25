@@ -1,5 +1,5 @@
 """
-app/agents/mood_analysis_agent.py
+chibi_diary/agents/mood_analysis_agent.py
 
 Mood Analysis Agent — Stage 2 of the Chibi Diary pipeline.
 

@@ -1,5 +1,5 @@
 """
-app/tools/placeholder_tools.py
+chibi_diary/tools/placeholder_tools.py
 
 Stub (placeholder) implementations of all Chibi Diary tools.
 

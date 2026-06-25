@@ -19,9 +19,9 @@ agent:
   root_agent: root_agent
 
 runtime:
-  # Use AI Studio (GOOGLE_API_KEY) for local dev.
-  # Switch to vertex_ai for production deployment.
-  provider: google_ai_studio
+  # Use vertex_ai when GOOGLE_GENAI_USE_VERTEXAI=True (production + local with GCP project).
+  # Switch to google_ai_studio if using GOOGLE_API_KEY for local dev without a GCP project.
+  provider: vertex_ai
   # Default model — agents can override this individually.
   default_model: gemini-2.5-flash
 

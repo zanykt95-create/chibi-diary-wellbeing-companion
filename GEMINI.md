@@ -17,8 +17,8 @@ User Input (diary entry text)
         │
         ▼
 ┌──────────────────────────┐
-│  chibi_diary_orchestrator │  ← Root agent (LlmAgent / SequentialAgent)
-│  app/orchestrator.py      │
+│  chibi_diary_orchestrator │  ← Root agent (Workflow / SequentialAgent)
+│  chibi_diary/orchestrator.py │
 └──────────────────────────┘
         │
         ├──① capture_agent        → validates & cleans raw entry text
@@ -31,11 +31,11 @@ User Input (diary entry text)
 
 | # | Agent | File | Responsibility |
 |---|-------|------|----------------|
-| 0 | `chibi_diary_orchestrator` | `app/orchestrator.py` | Root; routes input sequentially to all sub-agents; assembles final response |
-| 1 | `capture_agent` | `app/agents/capture_agent.py` | Receives raw diary text, validates it is non-empty, strips excess whitespace, returns cleaned string |
-| 2 | `mood_analysis_agent` | `app/agents/mood_analysis_agent.py` | Classifies primary emotion (happy/sad/anxious/grateful/excited/neutral), returns mood + intensity 0.0-1.0 + keywords |
-| 3 | `chibi_illustrator_agent` | `app/agents/chibi_illustrator_agent.py` | Builds a chibi-art prompt from mood + themes; calls MCP image tool (Day 2) or stub; returns image URL |
-| 4 | `memory_agent` | `app/agents/memory_agent.py` | Summarises entry in ≤50 words; persists to SQLite with date, mood, chibi URL; can retrieve past entries |
+| 0 | `chibi_diary_orchestrator` | `chibi_diary/orchestrator.py` | Root; routes input sequentially to all sub-agents; assembles final response |
+| 1 | `capture_agent` | `chibi_diary/agents/capture_agent.py` | Receives raw diary text, validates it is non-empty, strips excess whitespace, returns cleaned string |
+| 2 | `mood_analysis_agent` | `chibi_diary/agents/mood_analysis_agent.py` | Classifies primary emotion (happy/sad/anxious/grateful/excited/neutral), returns mood + intensity 0.0-1.0 + keywords |
+| 3 | `chibi_illustrator_agent` | `chibi_diary/agents/chibi_illustrator_agent.py` | Builds a chibi-art prompt from mood + themes; calls MCP image tool via McpToolset; returns image path |
+| 4 | `memory_agent` | `chibi_diary/agents/memory_agent.py` | Summarises entry in ≤50 words; persists to SQLite with date, mood, chibi URL; can retrieve past entries |
 
 ### Inter-Agent Communication
 
@@ -86,7 +86,7 @@ Agents communicate via **ADK session state** (`output_key`). Each agent writes i
 4. **Stub tools must return realistic data** so the pipeline can be tested end-to-end before real integrations are wired up.
 5. **Log each agent invocation** with `print(f"[orchestrator] → routing to {agent_name}")` so the pipeline is observable.
 6. **SQLite writes are synchronous** in this prototype; upgrade to `aiosqlite` when moving to async FastAPI.
-7. **The `root_agent` variable** must be defined at module level in `app/orchestrator.py` — ADK's CLI discovers it by name.
+7. **The `root_agent` variable** must be defined at module level in `chibi_diary/orchestrator.py` — ADK's CLI discovers it by name.
 
 ---
 
@@ -119,25 +119,36 @@ chibi-diary/
 ├── pyproject.toml                   ← Python dependencies
 ├── .env.example                     ← Credential template (no real values)
 ├── agents-cli-manifest.yaml         ← ADK CLI manifest
-├── app/
-│   ├── __init__.py                  ← App package init (exposes root_agent)
-│   ├── orchestrator.py              ← Root SequentialAgent definition
+├── Dockerfile                       ← Container image definition
+├── cloudbuild.yaml                  ← Cloud Build + Cloud Run deployment
+├── deploy.sh                        ← Deployment convenience script
+├── chibi_diary/
+│   ├── __init__.py                  ← Package init (re-exports root_agent for ADK)
+│   ├── orchestrator.py              ← Root Workflow orchestrator definition
+│   ├── eval_set_1.evalset.json      ← ADK eval cases (run with: adk eval chibi_diary eval_set_1)
 │   ├── agents/
 │   │   ├── __init__.py
-│   │   ├── capture_agent.py
-│   │   ├── mood_analysis_agent.py
-│   │   ├── chibi_illustrator_agent.py
-│   │   └── memory_agent.py
+│   │   ├── capture_agent.py         ← Stage 1: InputSanitizer + validation
+│   │   ├── mood_analysis_agent.py   ← Stage 2: emotion detection + intensity
+│   │   ├── chibi_illustrator_agent.py ← Stage 3: McpToolset → Imagen 3
+│   │   └── memory_agent.py          ← Stage 4: SQLite persistence + insights
 │   ├── tools/
 │   │   ├── __init__.py
-│   │   └── placeholder_tools.py     ← Stub tool implementations
+│   │   └── placeholder_tools.py     ← Tool implementations (real SQLite + stub chibi)
 │   └── memory/
 │       ├── __init__.py
-│       ├── session_memory.py        ← In-memory session context
+│       ├── session_memory.py        ← In-memory session scratch pad
 │       └── long_term_memory.py      ← SQLite-backed diary history
+├── mcp_server/
+│   ├── __init__.py
+│   ├── chibi_mcp_server.py          ← FastMCP server exposing generate_chibi_image
+│   └── imagen_client.py             ← Vertex AI Imagen 3 client wrapper
 └── tests/
     ├── __init__.py
-    └── test_orchestrator.py         ← Smoke tests
+    ├── test_orchestrator.py         ← Smoke + unit tests
+    ├── test_mcp_server.py           ← MCP server + ImagenClient tests
+    ├── test_evaluation.py           ← E2E pipeline + memory quality eval
+    └── test_security.py             ← Prompt injection + sanitizer tests
 ```
 
 ---

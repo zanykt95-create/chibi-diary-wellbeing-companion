@@ -1,0 +1,122 @@
+{
+  "eval_set_id": "eval_set_1",
+  "name": "Chibi Diary Core Eval Set",
+  "creation_timestamp": 1782324534.727917,
+  "eval_cases": [
+    {
+      "eval_id": "happy_promotion_entry",
+      "conversation": [
+        {
+          "user_content": {
+            "role": "user",
+            "parts": [
+              {
+                "text": "Today was amazing! I got promoted at work and celebrated with my whole family. Feeling so happy and grateful!"
+              }
+            ]
+          },
+          "expected_tool_use": [],
+          "expected_intermediate_agent_responses": [],
+          "reference_final_response": "Happy and grateful mood captured. Chibi art generated. Entry saved successfully."
+        }
+      ],
+      "session_input": {
+        "app_name": "chibi_diary",
+        "user_id": "eval_user_1",
+        "state": {}
+      }
+    },
+    {
+      "eval_id": "sad_lonely_entry",
+      "conversation": [
+        {
+          "user_content": {
+            "role": "user",
+            "parts": [
+              {
+                "text": "Had a really tough day. I feel so sad and lonely. Nobody seems to understand me."
+              }
+            ]
+          },
+          "expected_tool_use": [],
+          "expected_intermediate_agent_responses": [],
+          "reference_final_response": "Sad mood captured with empathy. Chibi art reflects gentle sadness. Entry saved."
+        }
+      ],
+      "session_input": {
+        "app_name": "chibi_diary",
+        "user_id": "eval_user_2",
+        "state": {}
+      }
+    },
+    {
+      "eval_id": "anxious_presentation_entry",
+      "conversation": [
+        {
+          "user_content": {
+            "role": "user",
+            "parts": [
+              {
+                "text": "Big presentation tomorrow. I can't sleep. Feeling very anxious and stressed about it."
+              }
+            ]
+          },
+          "expected_tool_use": [],
+          "expected_intermediate_agent_responses": [],
+          "reference_final_response": "Anxious mood detected. Reassuring chibi art generated. Entry saved with wellness insight."
+        }
+      ],
+      "session_input": {
+        "app_name": "chibi_diary",
+        "user_id": "eval_user_3",
+        "state": {}
+      }
+    },
+    {
+      "eval_id": "grateful_peaceful_entry",
+      "conversation": [
+        {
+          "user_content": {
+            "role": "user",
+            "parts": [
+              {
+                "text": "A quiet Sunday morning. Grateful for this peaceful time with my tea and books."
+              }
+            ]
+          },
+          "expected_tool_use": [],
+          "expected_intermediate_agent_responses": [],
+          "reference_final_response": "Grateful mood captured. Soft warm chibi art generated. Entry saved with positive reflection."
+        }
+      ],
+      "session_input": {
+        "app_name": "chibi_diary",
+        "user_id": "eval_user_4",
+        "state": {}
+      }
+    },
+    {
+      "eval_id": "empty_entry_rejection",
+      "conversation": [
+        {
+          "user_content": {
+            "role": "user",
+            "parts": [
+              {
+                "text": "   "
+              }
+            ]
+          },
+          "expected_tool_use": [],
+          "expected_intermediate_agent_responses": [],
+          "reference_final_response": "Entry rejected. User asked to write more."
+        }
+      ],
+      "session_input": {
+        "app_name": "chibi_diary",
+        "user_id": "eval_user_5",
+        "state": {}
+      }
+    }
+  ]
+}

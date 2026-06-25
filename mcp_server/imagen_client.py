@@ -93,3 +93,4 @@ class ImagenClient:
 
         output_path.write_bytes(image_bytes)
         return str(output_path)
+

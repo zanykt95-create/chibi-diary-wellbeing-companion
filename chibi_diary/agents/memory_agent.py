@@ -1,5 +1,5 @@
 """
-app/agents/memory_agent.py
+chibi_diary/agents/memory_agent.py
 
 Memory Agent — Stage 4 (final stage) of the Chibi Diary pipeline.
 

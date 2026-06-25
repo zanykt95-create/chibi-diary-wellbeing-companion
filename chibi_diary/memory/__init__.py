@@ -1,5 +1,5 @@
 """
-app/memory/__init__.py
+chibi_diary/memory/__init__.py
 
 Memory sub-package for Chibi Diary.
 

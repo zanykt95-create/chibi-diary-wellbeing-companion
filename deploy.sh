@@ -23,7 +23,7 @@ gcloud run deploy chibi-diary \
   --allow-unauthenticated \
   --memory=1Gi \
   --port=8080 \
-  --set-env-vars="GOOGLE_GENAI_USE_VERTEXAI=True,GOOGLE_CLOUD_PROJECT=${PROJECT_ID}" \
+  --set-env-vars="GOOGLE_GENAI_USE_VERTEXAI=True,GOOGLE_CLOUD_PROJECT=${PROJECT_ID},GOOGLE_CLOUD_LOCATION=us-central1" \
   --project="$PROJECT_ID"
 
 echo "✅ Deployed! Check: gcloud run services describe chibi-diary --region=us-central1"

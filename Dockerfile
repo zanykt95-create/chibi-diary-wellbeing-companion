@@ -21,6 +21,7 @@ COPY mcp_server/ ./mcp_server/
 # Environment variables (injected at runtime, NOT baked in)
 ENV PYTHONUNBUFFERED=1
 ENV GOOGLE_GENAI_USE_VERTEXAI=True
+ENV GOOGLE_CLOUD_LOCATION=us-central1
 
 # Expose ADK web port
 EXPOSE 8080
