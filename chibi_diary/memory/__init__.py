@@ -8,7 +8,7 @@ Two memory tiers:
   - LongTermMemory (long_term_memory.py): SQLite file, persists across sessions
 """
 
-from app.memory.long_term_memory import LongTermMemory
-from app.memory.session_memory import SessionMemory
+from chibi_diary.memory.long_term_memory import LongTermMemory
+from chibi_diary.memory.session_memory import SessionMemory
 
 __all__ = ["SessionMemory", "LongTermMemory"]

@@ -24,8 +24,8 @@ import random
 import re
 from datetime import date, datetime
 
-from app.memory.long_term_memory import LongTermMemory
-from app.memory.session_memory import SessionMemory
+from chibi_diary.memory.long_term_memory import LongTermMemory
+from chibi_diary.memory.session_memory import SessionMemory
 
 # ---------------------------------------------------------------------------
 # Module-level singletons

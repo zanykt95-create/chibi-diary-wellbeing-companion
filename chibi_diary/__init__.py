@@ -8,6 +8,6 @@ ADK's CLI discovers the root agent by importing this package and looking for
 `adk run app/` and `adk run app/orchestrator.py` work correctly.
 """
 
-from app.orchestrator import root_agent  # noqa: F401  — re-exported for ADK discovery
+from chibi_diary.orchestrator import root_agent  # noqa: F401  — re-exported for ADK discovery
 
 __all__ = ["root_agent"]

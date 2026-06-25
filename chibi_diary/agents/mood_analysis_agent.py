@@ -17,7 +17,7 @@ from __future__ import annotations
 
 from google.adk.agents import Agent
 
-from app.tools.placeholder_tools import analyze_mood
+from chibi_diary.tools.placeholder_tools import analyze_mood
 
 
 # ---------------------------------------------------------------------------

@@ -19,7 +19,7 @@ import re
 from collections import deque
 from datetime import datetime, timezone
 from google.adk.agents import Agent
-from app.tools.placeholder_tools import validate_entry
+from chibi_diary.tools.placeholder_tools import validate_entry
 
 
 # ---------------------------------------------------------------------------

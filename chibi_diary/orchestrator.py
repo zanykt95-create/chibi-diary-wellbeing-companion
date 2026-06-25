@@ -29,10 +29,10 @@ load_dotenv()
 # Import the four specialist sub-agents.
 # Each module exposes a module-level Agent variable named after the agent.
 # ---------------------------------------------------------------------------
-from app.agents.capture_agent import capture_agent
-from app.agents.chibi_illustrator_agent import chibi_illustrator_agent
-from app.agents.memory_agent import memory_agent
-from app.agents.mood_analysis_agent import mood_analysis_agent
+from chibi_diary.agents.capture_agent import capture_agent
+from chibi_diary.agents.chibi_illustrator_agent import chibi_illustrator_agent
+from chibi_diary.agents.memory_agent import memory_agent
+from chibi_diary.agents.mood_analysis_agent import mood_analysis_agent
 
 # ---------------------------------------------------------------------------
 # Routing callbacks — purely for observability (no control-flow effect).

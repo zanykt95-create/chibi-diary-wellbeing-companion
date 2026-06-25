@@ -7,7 +7,7 @@ Tests for the InputSanitizer and security features.
 from __future__ import annotations
 
 import pytest
-from app.agents.capture_agent import InputSanitizer, SECURITY_AUDIT_LOG
+from chibi_diary.agents.capture_agent import InputSanitizer, SECURITY_AUDIT_LOG
 
 
 def test_sanitizer_prompt_injection():

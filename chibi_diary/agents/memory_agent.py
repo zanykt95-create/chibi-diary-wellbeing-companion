@@ -26,7 +26,7 @@ from google.adk.agents import Agent
 from google.adk.tools import ToolContext
 from google.genai import types as genai_types
 
-from app.tools.placeholder_tools import (
+from chibi_diary.tools.placeholder_tools import (
     get_recent_entries,
     get_monthly_recap,
     get_mood_trend,

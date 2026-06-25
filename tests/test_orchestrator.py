@@ -38,7 +38,7 @@ _TMP_DB = _TMP_DB_FILE.name
 _TMP_DB_FILE.close()
 os.environ["DATABASE_PATH"] = _TMP_DB
 
-from app.tools.placeholder_tools import (
+from chibi_diary.tools.placeholder_tools import (
     save_entry,
     get_recent_entries,
     search_entries,
@@ -57,31 +57,31 @@ class TestImports:
 
     def test_orchestrator_imports(self) -> None:
         """Root orchestrator module should import and expose root_agent."""
-        from app.orchestrator import root_agent  # noqa: F401
+        from chibi_diary.orchestrator import root_agent  # noqa: F401
 
         assert root_agent is not None
 
     def test_capture_agent_imports(self) -> None:
         """Capture agent module should expose a capture_agent variable."""
-        from app.agents.capture_agent import capture_agent  # noqa: F401
+        from chibi_diary.agents.capture_agent import capture_agent  # noqa: F401
 
         assert capture_agent is not None
 
     def test_mood_analysis_agent_imports(self) -> None:
         """Mood agent module should expose mood_analysis_agent."""
-        from app.agents.mood_analysis_agent import mood_analysis_agent  # noqa: F401
+        from chibi_diary.agents.mood_analysis_agent import mood_analysis_agent  # noqa: F401
 
         assert mood_analysis_agent is not None
 
     def test_chibi_illustrator_agent_imports(self) -> None:
         """Illustrator agent module should expose chibi_illustrator_agent."""
-        from app.agents.chibi_illustrator_agent import chibi_illustrator_agent  # noqa: F401
+        from chibi_diary.agents.chibi_illustrator_agent import chibi_illustrator_agent  # noqa: F401
 
         assert chibi_illustrator_agent is not None
 
     def test_memory_agent_imports(self) -> None:
         """Memory agent module should expose memory_agent."""
-        from app.agents.memory_agent import memory_agent  # noqa: F401
+        from chibi_diary.agents.memory_agent import memory_agent  # noqa: F401
 
         assert memory_agent is not None
 
@@ -102,7 +102,7 @@ class TestOrchestratorStructure:
         except ImportError:
             from google.adk.agents import SequentialAgent as SeqType  # type: ignore[assignment]
 
-        from app.orchestrator import root_agent
+        from chibi_diary.orchestrator import root_agent
 
         assert isinstance(root_agent, SeqType), (
             f"Expected SequentialAgent/Workflow, got {type(root_agent).__name__}"
@@ -110,13 +110,13 @@ class TestOrchestratorStructure:
 
     def test_root_agent_name(self) -> None:
         """root_agent should be named chibi_diary_orchestrator."""
-        from app.orchestrator import root_agent
+        from chibi_diary.orchestrator import root_agent
 
         assert root_agent.name == "chibi_diary_orchestrator"
 
     def test_root_agent_has_four_sub_agents(self) -> None:
         """Pipeline must have exactly four sub-agents."""
-        from app.orchestrator import root_agent
+        from chibi_diary.orchestrator import root_agent
 
         assert len(root_agent.sub_agents) == 4, (
             f"Expected 4 sub-agents, found {len(root_agent.sub_agents)}"
@@ -124,7 +124,7 @@ class TestOrchestratorStructure:
 
     def test_sub_agent_order(self) -> None:
         """Sub-agents must be in the correct pipeline order."""
-        from app.orchestrator import root_agent
+        from chibi_diary.orchestrator import root_agent
 
         expected_names = [
             "capture_agent",
@@ -141,7 +141,7 @@ class TestOrchestratorStructure:
         """All LlmAgents should use gemini-2.5-flash-exp."""
         from google.adk.agents import Agent
 
-        from app.orchestrator import root_agent
+        from chibi_diary.orchestrator import root_agent
 
         for sub in root_agent.sub_agents:
             if isinstance(sub, Agent):
@@ -159,7 +159,7 @@ class TestStubTools:
 
     def test_validate_entry_valid(self) -> None:
         """validate_entry should accept a well-formed diary entry."""
-        from app.tools.placeholder_tools import validate_entry
+        from chibi_diary.tools.placeholder_tools import validate_entry
 
         result = validate_entry("Today was a great day! I finished my project.")
         assert isinstance(result, dict)
@@ -170,21 +170,21 @@ class TestStubTools:
 
     def test_validate_entry_empty(self) -> None:
         """validate_entry should reject an empty string."""
-        from app.tools.placeholder_tools import validate_entry
+        from chibi_diary.tools.placeholder_tools import validate_entry
 
         result = validate_entry("")
         assert result["valid"] is False
 
     def test_validate_entry_too_short(self) -> None:
         """validate_entry should reject a one-word entry."""
-        from app.tools.placeholder_tools import validate_entry
+        from chibi_diary.tools.placeholder_tools import validate_entry
 
         result = validate_entry("Hi")
         assert result["valid"] is False
 
     def test_analyze_mood_returns_required_keys(self) -> None:
         """analyze_mood must return mood, score, and keywords."""
-        from app.tools.placeholder_tools import analyze_mood
+        from chibi_diary.tools.placeholder_tools import analyze_mood
 
         result = analyze_mood("Today was a great day! I finished my project and felt really proud.")
         assert isinstance(result, dict)
@@ -194,14 +194,14 @@ class TestStubTools:
 
     def test_analyze_mood_score_range(self) -> None:
         """Mood score must be between 0.0 and 1.0."""
-        from app.tools.placeholder_tools import analyze_mood
+        from chibi_diary.tools.placeholder_tools import analyze_mood
 
         result = analyze_mood("I had a wonderful, joyful, amazing day full of love and laughter!")
         assert 0.0 <= result["score"] <= 1.0
 
     def test_analyze_mood_valid_label(self) -> None:
         """Mood label must be one of the six allowed values."""
-        from app.tools.placeholder_tools import analyze_mood
+        from chibi_diary.tools.placeholder_tools import analyze_mood
 
         allowed = {"happy", "sad", "anxious", "grateful", "excited", "neutral"}
         result = analyze_mood("Today was a great day! I finished my project.")
@@ -209,7 +209,7 @@ class TestStubTools:
 
     def test_generate_chibi_image_returns_url(self) -> None:
         """generate_chibi_image stub must return a dict with image_url."""
-        from app.tools.placeholder_tools import generate_chibi_image
+        from chibi_diary.tools.placeholder_tools import generate_chibi_image
 
         prompt = "A cute chibi character beaming with joy, sunny meadow background"
         result = generate_chibi_image(prompt)
@@ -221,7 +221,7 @@ class TestStubTools:
 
     def test_save_entry_returns_success(self) -> None:
         """save_entry should return success with a positive entry_id."""
-        from app.tools.placeholder_tools import save_entry
+        from chibi_diary.tools.placeholder_tools import save_entry
 
         result = save_entry(
             date="2025-01-01",
@@ -237,7 +237,7 @@ class TestStubTools:
 
     def test_get_recent_entries_returns_list(self) -> None:
         """get_recent_entries should return a list (possibly empty)."""
-        from app.tools.placeholder_tools import get_recent_entries
+        from chibi_diary.tools.placeholder_tools import get_recent_entries
 
         result = get_recent_entries(limit=5)
         assert isinstance(result, list)
@@ -252,7 +252,7 @@ class TestSessionMemory:
 
     def test_set_and_get(self) -> None:
         """Values set should be retrievable by key."""
-        from app.memory.session_memory import SessionMemory
+        from chibi_diary.memory.session_memory import SessionMemory
 
         mem = SessionMemory()
         mem.set("mood", "happy")
@@ -260,7 +260,7 @@ class TestSessionMemory:
 
     def test_get_missing_key_returns_default(self) -> None:
         """Getting a missing key should return the default value."""
-        from app.memory.session_memory import SessionMemory
+        from chibi_diary.memory.session_memory import SessionMemory
 
         mem = SessionMemory()
         assert mem.get("nonexistent") is None
@@ -268,7 +268,7 @@ class TestSessionMemory:
 
     def test_clear(self) -> None:
         """clear() should remove all stored values."""
-        from app.memory.session_memory import SessionMemory
+        from chibi_diary.memory.session_memory import SessionMemory
 
         mem = SessionMemory()
         mem.set("a", 1)
@@ -278,7 +278,7 @@ class TestSessionMemory:
 
     def test_get_all(self) -> None:
         """get_all() should return a copy of the full store."""
-        from app.memory.session_memory import SessionMemory
+        from chibi_diary.memory.session_memory import SessionMemory
 
         mem = SessionMemory()
         mem.set("x", 10)
@@ -295,7 +295,7 @@ class TestLongTermMemory:
         """Provide a fresh LongTermMemory backed by a temp SQLite file."""
         import tempfile
 
-        from app.memory.long_term_memory import LongTermMemory
+        from chibi_diary.memory.long_term_memory import LongTermMemory
 
         with tempfile.NamedTemporaryFile(suffix=".db", delete=False) as f:
             db_path = f.name
@@ -357,7 +357,7 @@ class TestPipelineSmoke:
     def test_full_pipeline_tools_sequence(self) -> None:
         """Simulate the pipeline by calling each tool in order and asserting
         the final response has all required keys."""
-        from app.tools.placeholder_tools import (
+        from chibi_diary.tools.placeholder_tools import (
             analyze_mood,
             generate_chibi_image,
             save_entry,
@@ -442,7 +442,7 @@ class TestMemoryAgentTools:
 
     def test_long_term_memory_search(self, tmp_path):
         """LongTermMemory.search_entries_sync returns matching entries."""
-        from app.memory.long_term_memory import LongTermMemory
+        from chibi_diary.memory.long_term_memory import LongTermMemory
         db = LongTermMemory(db_path=str(tmp_path / "test.db"))
         db.save_entry_sync("2025-01-01", "I love hiking in the mountains", "happy", 0.9, "Great day hiking", "")
         db.save_entry_sync("2025-01-02", "Tired from work", "sad", 0.3, "Tiring workday", "")
@@ -452,7 +452,7 @@ class TestMemoryAgentTools:
 
     def test_mood_trend_empty_db(self, tmp_path):
         """get_mood_trend_sync returns zeroed dict on empty DB."""
-        from app.memory.long_term_memory import LongTermMemory
+        from chibi_diary.memory.long_term_memory import LongTermMemory
         db = LongTermMemory(db_path=str(tmp_path / "empty.db"))
         trend = db.get_mood_trend_sync(days=7)
         assert trend["total_entries"] == 0
@@ -461,7 +461,7 @@ class TestMemoryAgentTools:
 
     def test_streak_with_entries(self, tmp_path):
         """get_streak_sync counts consecutive days correctly."""
-        from app.memory.long_term_memory import LongTermMemory
+        from chibi_diary.memory.long_term_memory import LongTermMemory
         from datetime import date, timedelta
         db = LongTermMemory(db_path=str(tmp_path / "streak.db"))
         today = date.today()

@@ -17,13 +17,13 @@ from unittest.mock import patch, AsyncMock
 from google.genai import types
 
 from google.adk.runners import InMemoryRunner
-from app.agents.capture_agent import capture_agent
-from app.agents.mood_analysis_agent import mood_analysis_agent
-from app.agents.chibi_illustrator_agent import chibi_illustrator_agent
-from app.agents.memory_agent import memory_agent
-from app.orchestrator import root_agent
+from chibi_diary.agents.capture_agent import capture_agent
+from chibi_diary.agents.mood_analysis_agent import mood_analysis_agent
+from chibi_diary.agents.chibi_illustrator_agent import chibi_illustrator_agent
+from chibi_diary.agents.memory_agent import memory_agent
+from chibi_diary.orchestrator import root_agent
 import app.tools.placeholder_tools as p_tools
-from app.memory.long_term_memory import LongTermMemory
+from chibi_diary.memory.long_term_memory import LongTermMemory
 
 # ---------------------------------------------------------------------------
 # Day 4 Labeled Mood Evaluation Cases
@@ -202,7 +202,7 @@ async def mock_generate_content(self, model, contents, config=None, **kwargs):
         if not raw_text.strip():
             response_text = "Write at least a sentence!"
         else:
-            from app.agents.capture_agent import InputSanitizer
+            from chibi_diary.agents.capture_agent import InputSanitizer
             sanitized, warnings = InputSanitizer.sanitize(raw_text)
             if warnings:
                 response_text = json.dumps({"captured_entry": sanitized, "security_flags": warnings})
@@ -237,7 +237,7 @@ async def mock_generate_content(self, model, contents, config=None, **kwargs):
                 "tags": ["tệ", "mắng oan"]
             })
         else:
-            from app.tools.placeholder_tools import analyze_mood
+            from chibi_diary.tools.placeholder_tools import analyze_mood
             res = analyze_mood(raw_text)
             response_text = json.dumps({
                 "mood": res["mood"],
@@ -582,7 +582,7 @@ class TestChibiEvaluation:
 
     def test_chibi_mood_to_prompt_mapping(self):
         """Test the local mapping helper function maps mood to style prompt keywords."""
-        from app.agents.chibi_illustrator_agent import map_mood_to_chibi_prompt
+        from chibi_diary.agents.chibi_illustrator_agent import map_mood_to_chibi_prompt
 
         sad_prompt = map_mood_to_chibi_prompt("sad")
         assert any(w in sad_prompt.lower() for w in ["tears", "rain", "blue"])
