@@ -17,7 +17,7 @@ User Input (diary entry text)
         │
         ▼
 ┌──────────────────────────┐
-│  chibi_diary_orchestrator │  ← Root agent (Workflow / SequentialAgent)
+│  chibi_diary_orchestrator │  ← Root agent (SequentialAgent)
 │  chibi_diary/orchestrator.py │
 └──────────────────────────┘
         │
@@ -124,7 +124,7 @@ chibi-diary/
 ├── deploy.sh                        ← Deployment convenience script
 ├── chibi_diary/
 │   ├── __init__.py                  ← Package init (re-exports root_agent for ADK)
-│   ├── orchestrator.py              ← Root Workflow orchestrator definition
+│   ├── orchestrator.py              ← Root SequentialAgent orchestrator definition
 │   ├── eval_set_1.evalset.json      ← ADK eval cases (run with: adk eval chibi_diary eval_set_1)
 │   ├── agents/
 │   │   ├── __init__.py
@@ -168,7 +168,7 @@ chibi-diary/
 ### Local Development
 ```bash
 uv sync
-adk web app    # opens http://localhost:8080
+adk web        # opens http://localhost:8000 — pick `chibi_diary` from the dropdown
 ```
 
 ### Docker
@@ -197,9 +197,9 @@ docker run -p 8080:8080 --env-file .env chibi-diary
 ## 9. Concepts Demonstrated (≥3/6 requirement)
 | Concept | Where | Evidence |
 |---------|-------|---------|
-| Multi-agent (ADK Workflow) | app/orchestrator.py | SequentialAgent/Workflow + 4 sub-agents |
+| Multi-agent (ADK SequentialAgent) | chibi_diary/orchestrator.py | SequentialAgent + 4 sub-agents |
 | MCP Server | mcp_server/ | FastMCP + Imagen 3 real image generation |
-| Security | app/agents/capture_agent.py | InputSanitizer + SECURITY_AUDIT_LOG |
+| Security | chibi_diary/agents/capture_agent.py | InputSanitizer + SECURITY_AUDIT_LOG |
 | Antigravity | — | Built & demoed in Google Antigravity IDE |
 | Deployability | Dockerfile + cloudbuild.yaml | Docker + Cloud Run ready |
 

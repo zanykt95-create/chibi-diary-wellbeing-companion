@@ -41,7 +41,7 @@ This is exactly the problem multi-agent systems solve. By decomposing the task i
 
 ## Architecture: Four Agents, One Pipeline
 
-The system uses Google ADK's `Workflow` (with `SequentialAgent` fallback for ADK 2.x compatibility) to orchestrate four specialized sub-agents:
+The system uses Google ADK's `SequentialAgent` — the deterministic workflow agent that runs its sub-agents in a fixed order — to orchestrate four specialized sub-agents:
 
 ```
 User Input
@@ -49,7 +49,7 @@ User Input
     ▼
 ┌─────────────────────────────────────────────────────────┐
 │                   ORCHESTRATOR                          │
-│              (ADK Workflow / SequentialAgent)           │
+│                  (ADK SequentialAgent)                  │
 └──────────┬──────────────────────────────────────────────┘
            │  Passes state through output_key chain
            ▼
@@ -75,7 +75,7 @@ User Input
 
 **Capture Agent** is the entry point and security gateway. It receives raw user input, strips HTML, truncates to 2,000 characters, detects prompt injection and SQL injection patterns, and writes to a real-time `SECURITY_AUDIT_LOG`. Only a clean, validated string passes to the next stage. The `output_key="captured_entry"` makes this output available to all downstream agents via ADK's shared session state.
 
-**Mood Analysis Agent** receives the clean entry and performs emotion classification using Gemini 2.5 Flash. It outputs a structured `mood_report` containing a primary mood label (e.g., `happy`, `stressed`, `melancholic`), an intensity score, and an explanation. This structured output is what drives the chibi illustration — not raw text.
+**Mood Analysis Agent** receives the clean entry and performs emotion classification using Gemini 2.5 Flash. It outputs a structured `mood_report` containing a primary mood label from a fixed set of six categories (`happy`, `sad`, `anxious`, `grateful`, `excited`, `neutral`), an intensity score (0.0–1.0), and emotional keywords. This structured output is what drives the chibi illustration — not raw text.
 
 **Chibi Illustrator Agent** maps the mood report to a detailed image generation prompt (via the `map_mood_to_chibi_prompt` helper, which is fully unit-tested), then calls the MCP Server tool to invoke Imagen 3. The generated PNG is saved locally and its path stored in `chibi_result`. If image generation fails, the agent falls back gracefully with an error note rather than crashing the pipeline.
 
@@ -147,10 +147,10 @@ The project includes 59 tests across four test files:
 
 | Test File | Count | What It Covers |
 |---|---|---|
-| `test_orchestrator.py` | 32 | Pipeline E2E, agent outputs, SQLite persistence |
-| `test_security.py` | 5 | InputSanitizer: HTML, truncation, injection detection |
+| `test_orchestrator.py` | 35 | Pipeline E2E, agent outputs, SQLite persistence, Memory Agent tools (trend, recap, streak) |
 | `test_evaluation.py` | 15 | Mood accuracy, chibi prompt quality, memory correctness |
-| *(integrated)* | 7 | Memory Agent tools: trend, recap, streak |
+| `test_security.py` | 5 | InputSanitizer: HTML, truncation, injection detection |
+| `test_mcp_server.py` | 4 | MCP `generate_chibi_image` schema + ImagenClient init |
 
 All 59 tests pass. The evaluation framework in `test_evaluation.py` generates `eval_report.json` with a `pass_rate: 1.0`, covering mood analysis accuracy, chibi prompt quality scoring, memory retrieval correctness, and end-to-end pipeline integrity.
 
@@ -160,9 +160,9 @@ All 59 tests pass. The evaluation framework in `test_evaluation.py` generates `e
 
 | Concept | Where |
 |---|---|
-| ✅ Multi-agent system (ADK) | `app/orchestrator.py` — 4-agent SequentialAgent/Workflow pipeline |
+| ✅ Multi-agent system (ADK) | `chibi_diary/orchestrator.py` — 4-agent SequentialAgent pipeline |
 | ✅ MCP Server | `mcp_server/chibi_mcp_server.py` — FastMCP stdio, Imagen 3 |
-| ✅ Security features | `app/agents/capture_agent.py` — InputSanitizer + SECURITY_AUDIT_LOG |
+| ✅ Security features | `chibi_diary/agents/capture_agent.py` — InputSanitizer + SECURITY_AUDIT_LOG |
 | ✅ Deployability | `Dockerfile`, `cloudbuild.yaml`, `deploy.sh` — Cloud Run ready |
 | ✅ Antigravity | All code built via spec-driven prompts in Google Antigravity IDE |
 

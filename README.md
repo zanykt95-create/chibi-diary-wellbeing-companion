@@ -17,7 +17,7 @@ Chibi Diary & Wellbeing Companion is an AI-powered journaling system that transf
 User Input
     │
     ▼
-chibi_diary_orchestrator (Workflow)
+chibi_diary_orchestrator (SequentialAgent)
     ├── 1. capture_agent          → validates & cleans text (InputSanitizer)
     ├── 2. mood_analysis_agent    → detects emotion + intensity
     ├── 3. chibi_illustrator_agent → generates chibi art via MCP (Imagen 3)
@@ -48,8 +48,8 @@ All agents use the **Google ADK** framework and the `gemini-2.5-flash` model. In
 ### Path A: Local Development
 1. **Clone the repository and install dependencies:**
    ```bash
-   git clone <repo-url>
-   cd chibi-diary
+   git clone https://github.com/zanykt95-create/chibi-diary-wellbeing-companion.git
+   cd chibi-diary-wellbeing-companion
    uv sync
    ```
 
@@ -140,7 +140,7 @@ chibi-diary/
 ├── cloudbuild.yaml              # Cloud Build definition for Cloud Run
 ├── deploy.sh                    # Deployment convenience script
 ├── chibi_diary/
-│   ├── orchestrator.py          # Root Workflow orchestrator
+│   ├── orchestrator.py          # Root SequentialAgent orchestrator
 │   ├── agents/                  # 4 sequential specialist agents
 │   │   ├── capture_agent.py     # Captures, sanitizes (InputSanitizer) and validates
 │   │   ├── mood_analysis_agent.py # Identifies feelings and intensity scores
@@ -160,7 +160,7 @@ chibi-diary/
 
 ## 💡 Concepts Demonstrated
 
-*   **Multi-agent system (ADK Workflow)**: Wire specialized single-purpose agents (`capture_agent`, `mood_analysis_agent`, `chibi_illustrator_agent`, `memory_agent`) sequentially using the modern ADK `Workflow` orchestration class.
+*   **Multi-agent system (ADK SequentialAgent)**: Wire specialized single-purpose agents (`capture_agent`, `mood_analysis_agent`, `chibi_illustrator_agent`, `memory_agent`) into a deterministic pipeline using ADK's `SequentialAgent` orchestration class.
 *   **MCP Server (FastMCP + Imagen 3)**: Implements custom `FastMCP` server connecting to Google's Imagen 3 model via Vertex AI, handling asynchronous image generation and disk persistence.
 *   **Security (InputSanitizer + Audit Logs)**: Integrates strict defense-in-depth sanitization, SQL/prompt injection detection, and security audit log tracing.
 *   **Google Antigravity**: Developed, tested, and validated dynamically in the Google Antigravity IDE workspace.

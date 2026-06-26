@@ -105,10 +105,10 @@ chibi_illustrator_agent = Agent(
 
 def map_mood_to_chibi_prompt(mood: str) -> str:
     """Map a mood to a chibi style prompt.
-    
+
     Args:
         mood: The detected mood (e.g. 'happy', 'sad').
-        
+
     Returns:
         A prompt string containing appropriate style hints.
     """
@@ -121,4 +121,5 @@ def map_mood_to_chibi_prompt(mood: str) -> str:
         "neutral": "A cute chibi character sitting peacefully in a cozy reading nook, quiet",
     }
     return mood_prompts.get(mood.lower(), "A cute chibi character")
+
 

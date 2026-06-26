@@ -22,7 +22,7 @@ from __future__ import annotations
 import os
 import random
 import re
-from datetime import date, datetime
+
 
 from chibi_diary.memory.long_term_memory import LongTermMemory
 from chibi_diary.memory.session_memory import SessionMemory
@@ -34,8 +34,8 @@ from chibi_diary.memory.session_memory import SessionMemory
 # ---------------------------------------------------------------------------
 _session_memory = SessionMemory()
 _db_path = os.environ.get("DATABASE_PATH", "./chibi_diary.db")
+
 _long_term_memory = LongTermMemory(db_path=_db_path)
-_memory = _long_term_memory
 
 
 # ===========================================================================
@@ -152,8 +152,7 @@ def analyze_mood(text: str) -> dict:
         elif neg_count > pos_count:
             detected_mood = "sad"
 
-    # Score: base on word count of emotional language (stub heuristic)
-    word_count = len(text.split())
+    # Score: scale with the number of matched emotional keywords (stub heuristic)
     base_score = min(0.9, 0.3 + (len(matched_keywords) * 0.15))
     # Add small random variance to simulate model uncertainty
     score = round(min(1.0, base_score + random.uniform(-0.05, 0.05)), 2)
@@ -181,16 +180,6 @@ def analyze_mood(text: str) -> dict:
 # ===========================================================================
 # chibi_illustrator_agent tools
 # ===========================================================================
-
-# Mood → chibi art style hints for the stub
-_CHIBI_MOOD_STYLES: dict[str, str] = {
-    "happy": "sunny meadow background, flower crown, big sparkling eyes",
-    "sad": "rainy window scene, small tears, cozy blanket",
-    "anxious": "swirling thoughts backdrop, wide worried eyes, fidgeting hands",
-    "grateful": "warm golden light, pressed hands, soft smile",
-    "excited": "confetti explosion, jumping pose, star-filled eyes",
-    "neutral": "cozy reading nook, peaceful expression, soft indoor lighting",
-}
 
 
 def generate_chibi_image(prompt: str) -> dict:
@@ -317,7 +306,7 @@ def search_entries(keyword: str) -> str:
         A formatted string of search results.
     """
     try:
-        entries = _memory.search_entries_sync(keyword, limit=5)
+        entries = _long_term_memory.search_entries_sync(keyword, limit=5)
         result = f'SEARCH_RESULTS for "{keyword}":\n\n'
         if not entries:
             result += "No results found."
@@ -333,7 +322,7 @@ def search_entries(keyword: str) -> str:
         return f"Error searching entries: {exc}"
 
 
-def get_mood_trend(days: int = 7) -> str:
+def get_mood_trend(days: int) -> str:
     """Retrieve mood trend statistics over the last N days.
 
     Args:
@@ -343,7 +332,7 @@ def get_mood_trend(days: int = 7) -> str:
         A formatted string summarizing the mood trend.
     """
     try:
-        trend_data = _memory.get_mood_trend_sync(days)
+        trend_data = _long_term_memory.get_mood_trend_sync(days)
         result = (
             f"MOOD_TREND last {days} days:\n\n"
             f"Entries: {trend_data['total_entries']} | "
@@ -370,7 +359,7 @@ def get_monthly_recap() -> str:
         A formatted string of the monthly recap.
     """
     try:
-        recap = _memory.get_monthly_recap_sync()
+        recap = _long_term_memory.get_monthly_recap_sync()
         result = (
             f"MONTHLY_RECAP:\n\n"
             f"Period: {recap['period']}\n"
@@ -395,7 +384,7 @@ def get_streak() -> str:
         A formatted string summarizing the streak.
     """
     try:
-        streak = _memory.get_streak_sync()
+        streak = _long_term_memory.get_streak_sync()
         return f"STREAK: {streak['current_streak_days']} day(s) | Last entry: {streak['last_entry_date']}"
     except Exception as exc:  # noqa: BLE001
         return f"Error getting streak: {exc}"

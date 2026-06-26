@@ -390,7 +390,7 @@ class TestMoodEvaluation:
                 "frustrated": ["frustrated", "angry", "sad", "neutral"],
                 "hopeful": ["hopeful", "happy", "excited", "neutral"],
                 "calm": ["calm", "neutral", "grateful"],
-                "mixed": ["happy", "sad", "anxious", "grateful", "excited", "neutral", "tired", "frustrated", "hopeful", "calm", "angry", "mixed"]
+                "mixed": ["mixed", "neutral"]
             }
             allowed = allowed_mapping.get(expected, [expected])
 

@@ -93,18 +93,13 @@ class TestOrchestratorStructure:
     """Verify the orchestrator agent is wired up correctly."""
 
     def test_root_agent_is_sequential(self) -> None:
-        """root_agent should be a SequentialAgent or Workflow (ADK 2.x)."""
-        # ADK 2.x deprecated SequentialAgent in favour of Workflow.
-        # Accept whichever is present so tests pass on both versions.
-        try:
-            from google.adk.agents.workflow import Workflow as SeqType  # ADK 2.x
-        except ImportError:
-            from google.adk.agents import SequentialAgent as SeqType  # type: ignore[assignment]
+        """root_agent should be an ADK SequentialAgent (deterministic workflow agent)."""
+        from google.adk.agents import SequentialAgent as SeqType
 
         from chibi_diary.orchestrator import root_agent
 
         assert isinstance(root_agent, SeqType), (
-            f"Expected SequentialAgent/Workflow, got {type(root_agent).__name__}"
+            f"Expected SequentialAgent, got {type(root_agent).__name__}"
         )
 
     def test_root_agent_name(self) -> None:
@@ -137,7 +132,7 @@ class TestOrchestratorStructure:
         )
 
     def test_sub_agents_use_correct_model(self) -> None:
-        """All LlmAgents should use gemini-2.5-flash-exp."""
+        """All LlmAgents should use a gemini model (gemini-2.5-flash)."""
         from google.adk.agents import Agent
 
         from chibi_diary.orchestrator import root_agent

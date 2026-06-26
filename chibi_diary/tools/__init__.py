@@ -1,5 +1,5 @@
 """
-app/tools/__init__.py
+chibi_diary/tools/__init__.py
 
 Tools sub-package for Chibi Diary.
 

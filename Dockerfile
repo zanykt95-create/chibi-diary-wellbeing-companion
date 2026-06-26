@@ -5,18 +5,17 @@ WORKDIR /app
 # Install uv
 RUN pip install uv
 
-# Copy dependency files first (layer caching)
-COPY pyproject.toml uv.lock ./
-
-# Install dependencies (no dev deps)
-RUN uv sync --frozen --no-dev
-
-# Copy application source
+# Copy project metadata AND source before syncing.
+# pyproject.toml declares readme="README.md" and the chibi_diary/mcp_server
+# packages, so all of them must exist when `uv sync` builds the local project —
+# otherwise the build fails. README.md and the source are therefore copied first.
+COPY pyproject.toml uv.lock README.md ./
 COPY chibi_diary/ ./chibi_diary/
+COPY mcp_server/ ./mcp_server/
 COPY GEMINI.md ./
 
-# MCP server must be co-located
-COPY mcp_server/ ./mcp_server/
+# Install dependencies + the local project (no dev deps)
+RUN uv sync --frozen --no-dev
 
 # Environment variables (injected at runtime, NOT baked in)
 ENV PYTHONUNBUFFERED=1

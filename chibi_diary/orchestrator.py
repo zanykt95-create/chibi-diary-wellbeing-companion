@@ -3,7 +3,8 @@ chibi_diary/orchestrator.py
 
 Root orchestrator agent for Chibi Diary & Wellbeing Companion.
 
-ADK 2.x: using Workflow (replaces deprecated SequentialAgent)
+Uses ADK's SequentialAgent — the deterministic workflow agent that runs its
+sub-agents in a fixed order (verified against google-adk 2.3.0).
 
 Architecture decision: We wire the four specialist sub-agents into a deterministic pipeline rather than relying on LLM-based routing.
 This gives us predictable, observable behaviour — every diary entry always goes through all four stages in the same order.
@@ -11,15 +12,10 @@ This gives us predictable, observable behaviour — every diary entry always goe
 
 from __future__ import annotations
 
-import os
-
 from dotenv import load_dotenv
 
-# ADK 2.x: using Workflow (replaces deprecated SequentialAgent)
-try:
-    from google.adk.agents import Workflow as SequentialAgent
-except ImportError:
-    from google.adk.agents import SequentialAgent  # fallback for older ADK
+# SequentialAgent is the deterministic workflow agent in google.adk.agents.
+from google.adk.agents import SequentialAgent
 
 # Load .env before any credential-dependent import.
 # This must happen before Agent instantiation so the model can authenticate.
@@ -61,8 +57,6 @@ def _log_pipeline_start() -> None:
 # to call, which is non-deterministic and inappropriate for a save-everything
 # journaling pipeline.
 # ---------------------------------------------------------------------------
-# ADK 2.x uses Workflow; older versions used SequentialAgent.
-# The try/import above aliased whichever is available to SequentialAgent.
 root_agent = SequentialAgent(
     name="chibi_diary_orchestrator",
     description=(
@@ -79,6 +73,7 @@ root_agent = SequentialAgent(
 )
 
 # ---------------------------------------------------------------------------
-# Log the pipeline topology on import (visible when `adk run` starts up).
+# Log the pipeline topology when executed as main script.
 # ---------------------------------------------------------------------------
-_log_pipeline_start()
+if __name__ == "__main__":
+    _log_pipeline_start()
