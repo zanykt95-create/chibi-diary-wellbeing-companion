@@ -165,6 +165,7 @@ chibi-diary/
 *   **Security (InputSanitizer + Audit Logs)**: Integrates strict defense-in-depth sanitization, SQL/prompt injection detection, and security audit log tracing.
 *   **Google Antigravity**: Developed, tested, and validated dynamically in the Google Antigravity IDE workspace.
 *   **Deployability (Docker + Cloud Run)**: Fully containerized environment with configuration rules ready for cloud deployment.
+*   **Agent Skills**: ✅ `chibi_diary/skills/wellbeing/` — SkillToolset loaded by Memory Agent for guided wellbeing insights
 
 ---
 

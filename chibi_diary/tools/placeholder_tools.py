@@ -129,7 +129,9 @@ def analyze_mood(text: str) -> dict:
           - confidence (float): Model confidence in the mood classification.
     """
     # STUB LOGIC: Detect mood from keyword presence.
-    # Day 2: Replace with a real Gemini API call or dedicated sentiment model.
+    # NOTE: This tool is no longer called by mood_analysis_agent — the Gemini
+    # LLM analyses mood directly from the instruction prompt. This stub is kept
+    # for backward-compatibility with any tests that import it directly.
     text_lower = text.lower()
     detected_mood = "neutral"
     matched_keywords: list[str] = []

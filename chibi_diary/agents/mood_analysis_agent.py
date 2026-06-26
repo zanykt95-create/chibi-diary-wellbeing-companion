@@ -17,8 +17,6 @@ from __future__ import annotations
 
 from google.adk.agents import Agent
 
-from chibi_diary.tools.placeholder_tools import analyze_mood
-
 
 # ---------------------------------------------------------------------------
 # Mood Analysis Agent definition
@@ -36,11 +34,11 @@ emotional tone of the diary entry and produce a structured mood report.
 
 The diary entry to analyse is: {captured_entry}
 
-Steps:
-1. Call the `analyze_mood` tool with the diary entry text.
-2. The tool returns a dict with keys: mood, score, keywords.
-3. Allowed mood values: happy, sad, anxious, grateful, excited, neutral.
-4. Score is a float 0.0 (mild) to 1.0 (intense).
+Instructions:
+1. Read the diary entry carefully and identify the dominant emotion.
+2. Allowed mood values (pick exactly ONE): happy, sad, anxious, grateful, excited, neutral.
+3. Assign an intensity score: 0.0 (very mild) to 1.0 (very intense).
+4. Extract up to 5 keywords that best capture the emotional tone.
 5. Format your response exactly like this, one line per field:
    MOOD: <mood>
    SCORE: <score>
@@ -48,7 +46,7 @@ Steps:
 
 Do not add any other text. This structured format is parsed by the next agent.
 """,
-    tools=[analyze_mood],
+    tools=[],
     # Writes mood report string into session state under "mood_report".
     # The chibi illustrator reads this via {mood_report}.
     output_key="mood_report",

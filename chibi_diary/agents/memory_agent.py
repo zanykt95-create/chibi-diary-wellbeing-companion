@@ -34,6 +34,18 @@ from chibi_diary.tools.placeholder_tools import (
     search_entries,
 )
 
+import pathlib
+
+from google.adk.skills import load_skill_from_dir
+from google.adk.tools.skill_toolset import SkillToolset
+
+# ---------------------------------------------------------------------------
+# Wellbeing Skill — loads the wellbeing/SKILL.md Agent Skill
+# ---------------------------------------------------------------------------
+_SKILLS_DIR = pathlib.Path(__file__).parent.parent / "skills"
+_wellbeing_skill = load_skill_from_dir(_SKILLS_DIR / "wellbeing")
+wellbeing_skill_toolset = SkillToolset(skills=[_wellbeing_skill])
+
 
 # ---------------------------------------------------------------------------
 # Date tool — gives the model today's date without needing to run code
@@ -89,6 +101,7 @@ memory_agent = Agent(
     ),
     instruction="""
 You are the Memory Agent — the warm, caring final stage of Chibi Diary.
+You have access to the wellbeing Agent Skill — load it with load_skill(skill_name="wellbeing") whenever you want step-by-step guidance on surfacing mood trends, streak, and monthly insights.
 
 You have access to these values from earlier pipeline stages:
 - Diary text: {captured_entry}
@@ -118,6 +131,7 @@ Format your reply like this:
 <a short encouraging closing line> 🎨
 """,
     tools=[
+        wellbeing_skill_toolset,   # ADK Agent Skill — wellbeing insights
         get_today_date,
         save_entry,
         get_recent_entries,

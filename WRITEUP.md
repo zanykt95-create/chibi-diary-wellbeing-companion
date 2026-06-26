@@ -165,6 +165,7 @@ All 59 tests pass. The evaluation framework in `test_evaluation.py` generates `e
 | ✅ Security features | `chibi_diary/agents/capture_agent.py` — InputSanitizer + SECURITY_AUDIT_LOG |
 | ✅ Deployability | `Dockerfile`, `cloudbuild.yaml`, `deploy.sh` — Cloud Run ready |
 | ✅ Antigravity | All code built via spec-driven prompts in Google Antigravity IDE |
+| ✅ Agent Skills | `chibi_diary/skills/wellbeing/` — A SKILL.md-based Agent Skill loaded via ADK's SkillToolset. The Memory Agent can invoke the wellbeing skill for step-by-step guided mood-trend analysis, streak celebration, and monthly recap — following the progressive disclosure pattern from Day 3 of the course. |
 
 ---
 
@@ -179,4 +180,4 @@ The architecture is deliberately simple enough to understand and extend, yet com
 ---
 
 *Built with Google ADK 2.3.0, FastMCP, Imagen 3, Gemini 2.5 Flash, and Google Antigravity.*  
-*59/59 tests passing. 5/6 key concepts demonstrated.*
+*59/59 tests passing. 6/6 key concepts demonstrated.*
